@@ -32,19 +32,16 @@ Follow these steps to run the visualization:
 
 To load the triples into the GraphDB, follow these steps:
 
-1. Load the data into the browser (Make sure to get the raw CSV file link from GitHub).
+1. Load the data into the browser and create a list of head and value nodes (Make sure to get the raw CSV file link from GitHub).
 ```cypher
-load csv from "https://raw.githubusercontent.com/Krutik-Patel/Triples/main/triples_to_show.csv";
-```
-2. Create a list of head and value pairs of nodes.
-``` cypher
+load csv with header from "https://raw.githubusercontent.com/Krutik-Patel/Triples/main/triples_to_show.csv" as list;
 create (:head {name: list.head}), (:value {name: list.value});
-``` 
-3. Remove common nodes.
+```
+2. Remove common nodes.
 ``` cypher
 match (n)
 with n.name AS name, COLLECT(n) AS nodelist, COUNT(*) AS count
-WHERE count > 1
+where count > 1
 call apoc.refactor.mergeNodes(nodelist,{
   properties:"combine",
   mergeRels:true
@@ -52,14 +49,14 @@ call apoc.refactor.mergeNodes(nodelist,{
 yield node
 return node; 
 ```
-4. Create relationships.
+3. Create relationships.
 ```cypher
 load csv with headers from "file:///triples.csv" as list
 match (HEAD:head {name: list.head}), (TAIL:value {name: list.value})
 create (HEAD)-[:variable {name: list.variable, weight: list.prob}]->(TAIL);
 
 ```
-5. Change the styling of the GraphDB.
+4. Change the styling of the GraphDB.
 ``` cypher
 :style relationship.variable {
     caption: "{name} {weight}";
