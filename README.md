@@ -35,7 +35,7 @@ To load the triples into the GraphDB, follow these steps:
 1. Load the data into the browser and create a list of head and value nodes (Make sure to get the raw CSV file link from GitHub).
 ```cypher
 load csv with headers from "https://raw.githubusercontent.com/Krutik-Patel/Triples/main/triples.csv" as list
-create (:head {name: list.head}), (:value {name: list.value});
+create (:head {name: list.head}), (:value {name: list.value, word: list.tail});
 ```
 2. Remove common nodes.
 ``` cypher
