@@ -32,9 +32,9 @@ Follow these steps to run the visualization:
 
 To load the triples into the GraphDB, follow these steps:
 
-1. Load the data into the browser.
+1. Load the data into the browser (Make sure to get the raw CSV file link from GitHub).
 ```cypher
-load csv from "files:///triples.csv";
+load csv from "https://raw.githubusercontent.com/Krutik-Patel/Triples/main/triples_to_show.csv";
 ```
 2. Create a list of head and value pairs of nodes.
 ``` cypher
